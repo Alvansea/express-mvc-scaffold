@@ -3,8 +3,8 @@ scaffold for express mvc web development
 
 ## Major Dependencies
 
-* Database: mysql, mongo (planned)
-* ORM: jugglingdb, mongoose (planned)
+* Database: mysql(supported), mongo (planned)
+* ORM: jugglingdb(supported), mongoose (planned)
 * Web Framework: express
 * Template Engine: ect
 * Frontend: angularjs
