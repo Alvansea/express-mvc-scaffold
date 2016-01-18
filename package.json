@@ -1,10 +1,12 @@
 {
-  "name": "arroyo-express",
-  "version": "0.0.0",
+  "name": "express-mvc-scaffold",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "supervisor ./app.js"
   },
+  "description": "scaffold for express mvc web development",
+  "main": "app.js",
   "dependencies": {
     "async": "~1.5.1",
     "body-parser": "~1.13.2",
@@ -29,5 +31,22 @@
     "underscore": "~1.8.3",
     "winston": "~2.1.1",
     "winston-daily-rotate-file": "^1.0.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alvansea/express-mvc-scaffold.git"
+  },
+  "keywords": [
+    "MEAN",
+    "express",
+    "mvc",
+    "scaffold"
+  ],
+  "author": "alvansea@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alvansea/express-mvc-scaffold/issues"
+  },
+  "homepage": "https://github.com/Alvansea/express-mvc-scaffold#readme"
 }

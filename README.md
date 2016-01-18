@@ -17,15 +17,21 @@ scaffold for express mvc web development
 
 ### Start server
 
-1. clone repository
-    git clone https://github.com/Alvansea/express-mvc-scaffold/
+1. clone repository2. 
+
+	```
+	clone https://github.com/Alvansea/express-mvc-scaffold/
+	```
 2. modify package.json for your own project
 3. install depepencies
-    npm install
-    bower install
+	
+	```
+	npm install
+	bower install
+	```
 4. modify conf files
 5. start server
-    npm start
+    npm start            
 
 ### Add/Edit models
 1. modify /models/_schema.js
