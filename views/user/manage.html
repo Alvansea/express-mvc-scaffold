@@ -1,0 +1,123 @@
+<% extend '_templates/admin.html' %>
+
+<% block 'content': %>
+<div ng-controller="UserManageCtrl">
+  <table class="table table-striped">
+    <tr>
+      <th>用户名</th>
+      <th>邮箱</th>
+      <th>手机</th>
+      <th>角色</th>
+      <th>最后登录</th>
+      <th>管理</th>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.mobile }}</td>
+      <td>{{ user.role }}</td>
+      <td>{{ getLatestLogin(user).loginAt | date: 'yyyy-MM-dd HH:mm' }}</td>
+      <td>
+        <a class="btn btn-sm btn-default"
+           ng-click="editUser()">编辑</a>
+        <a class="btn btn-sm btn-default"
+           ng-click="deleteUser()">删除</a>
+      </td>
+    </tr>
+  </table>
+
+  <div class="modal fade user-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form"
+                ng-submit="saveCurrent()">
+            <div class="form-group">
+              <label>用户名</label>
+              <input type="text"
+                     class="form-control"
+                     ng-model="current.name">
+            </div>
+            <div class="form-group">
+              <label>邮箱</label>
+              <input type="text"
+                     class="form-control"
+                     ng-model="current.email">
+            </div>
+            <div class="form-group">
+              <label>手机</label>
+              <input type="text"
+                     class="form-control"
+                     ng-model="current.mobile">
+            </div>
+            <div class="form-group">
+              <label></label>
+              <button type="submit"
+                      class="btn btn-primary">保存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+angular
+  .module('arroyo')
+  .controller('UserManageCtrl', [
+    '$scope',
+    '$resource',
+    function($scope, $resource) {
+
+      var User = $resource('/admin/users/:id', {
+        id: '@id'
+      })
+
+      $scope.users = ViewModels.users || [];
+      $scope.current = {};
+
+      $scope.getLatestLogin = function(user) {
+        var login = null;
+        for(var i in user.logins) {
+          if(!login || login.loginAt < user.logins[i].loginAt) {
+            login = user.logins[i];
+          }
+        }
+        return login;
+      }
+
+      $scope.editUser = function() {
+        $scope.current = this.user;
+        $('.user-modal').modal();
+      }
+
+      $scope.saveCurrent = function() {
+        User.save($scope.current, function(res) {
+          if(res.error) {
+            return showTip(res.error);
+          }
+          $('.user-modal').modal('hide');
+        }, function(err) {
+          if(err.data && err.data.message) {
+            showTip(err.data.message);
+          }
+          console.log(err);
+        })
+      }
+
+      $scope.deleteUser = function() {
+        if(!confirm('请确认删除当前用户!')) {
+          return;
+        }
+        var index = this.$index;
+        User.delete(this.user, function(res) {
+          if(res.error) {
+            return showTip(res.error);
+          }
+          $scope.users.splice(index, 1);
+        })
+      }
+    }])
+</script>
+<% end %>

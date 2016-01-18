@@ -1,0 +1,76 @@
+<% extend '_templates/default.html' %>
+
+<% block 'content': %>
+<form class="form"
+      ng-controller="SignupCtrl"
+      ng-submit="register()">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="form-group">
+          <label>用户名</label>
+          <input type="text"
+                 class="form-control"
+                 ng-model="user.name"
+                 required>
+        </div>
+        <div class="form-group">
+          <label>邮箱</label>
+          <input type="text"
+                 class="form-control"
+                 ng-model="user.email"
+                 required>
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password"
+                 class="form-control"
+                 ng-model="user.pwd"
+                 required>
+        </div>
+        <div class="form-group">
+          <label>重复密码</label>
+          <input type="password"
+                 class="form-control"
+                 ng-model="user.repwd"
+                 required>
+        </div>
+        <div class="form-group">
+          <button type="submit"
+                  class="btn btn-block btn-primary">
+            我已阅读用户协议并同意注册
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+angular
+  .module('arroyo')
+  .controller('SignupCtrl', [
+    '$scope',
+    '$resource',
+    function($scope, $resource) {
+
+      $scope.user = {};
+
+      $scope.register = function() {
+        if($scope.user.pwd.length < 6) {
+          return showTip('密码长度不得小于六位');
+        }
+        if($scope.user.pwd != $scope.user.repwd) {
+          return showTip('两次输入的密码不一致');
+        }
+        $resource(window.location.href).save($scope.user, function(res) {
+          if(res.error) {
+            return showTip(res.error);
+          }
+          window.location.href = '/home';
+        })
+      }
+    }])
+</script>
+
+<% end %>

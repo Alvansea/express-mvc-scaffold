@@ -1,0 +1,45 @@
+<% extend '_templates/default.html' %>
+
+<% block 'content': %>
+<div class="container" ng-controller="SigninCtrl">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <form class="form" ng-submit="login()">
+        <div class="form-group">
+          <label>用户名</label>
+          <input type="text"
+                 class="form-control"
+                 ng-model="user.name">
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password"
+                 class="form-control"
+                 ng-model="user.pwd">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block">登录</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+angular
+  .module('arroyo')
+  .controller('SigninCtrl', [
+    '$scope',
+    '$resource',
+    function($scope, $resource) {
+      $scope.user = {};
+      $scope.login = function() {
+        $resource(window.location.href).save($scope.user, function(res) {
+          if(res.error) {
+            return showTip(res.error);
+          }
+          window.location.href = '/home';
+        })
+      }
+    }])
+</script>
+<% end %>

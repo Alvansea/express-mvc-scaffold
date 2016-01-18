@@ -1,0 +1,14 @@
+<script>
+var ViewModels = {};
+<% if @ViewModels: %>
+var jsonVM = "<%= JSON.stringify(@ViewModels).replace(/\\/g, '\\\\') %>";
+ViewModels = JSON.parse($('<div/>').html(jsonVM).text());
+<% end %>
+<% if @currentUser: %>
+var jsonCU = "<%= JSON.stringify(@currentUser).replace(/\\/g, '\\\\') %>";
+ViewModels.currentUser = JSON.parse($('<div/>').html(jsonCU).text());
+<% end %>
+<% if @client: %>
+ViewModels.client = '<%= @client %>';
+<% end %>
+</script>
