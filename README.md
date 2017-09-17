@@ -1,4 +1,4 @@
-# express-mvc-scaffold
+# mobydick-skeleton
 scaffold for express mvc web development
 
 ## Major Dependencies
